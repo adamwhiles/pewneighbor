@@ -1,13 +1,17 @@
 import { auth } from "@/lib/auth";
 
-const PROTECTED_PREFIXES = ["/discover", "/waves", "/messages", "/profile", "/settings", "/onboarding"];
+const PROTECTED_PREFIXES = ["/discover", "/waves", "/messages", "/profile", "/settings", "/onboarding", "/admin", "/church-admin"];
 
 export default auth((req) => {
   const { nextUrl } = req;
   const isAuthenticated = !!req.auth?.user;
 
   if (isAuthenticated && nextUrl.pathname === "/sign-in") {
-    return Response.redirect(new URL("/discover", nextUrl));
+    const isAppAdmin = (req.auth?.user as { isAppAdmin?: boolean } | undefined)
+      ?.isAppAdmin;
+    return Response.redirect(
+      new URL(isAppAdmin ? "/admin/churches" : "/discover", nextUrl)
+    );
   }
 
   const isProtected = PROTECTED_PREFIXES.some((p) =>

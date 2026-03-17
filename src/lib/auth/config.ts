@@ -43,11 +43,16 @@ export const authConfig: NextAuthConfig = {
     async session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
+        // Expose isAppAdmin so the proxy can route admins correctly
+        const dbUser = await db.query.users.findFirst({
+          where: (t, { eq }) => eq(t.id, user.id),
+        });
+        (session.user as typeof session.user & { isAppAdmin: boolean }).isAppAdmin =
+          dbUser?.isAppAdmin ?? false;
       }
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // After sign in, redirect to onboarding or discover
       if (url.startsWith(baseUrl)) return url;
       if (url.startsWith("/")) return `${baseUrl}${url}`;
       return `${baseUrl}/onboarding`;
