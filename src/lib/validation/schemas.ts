@@ -38,7 +38,7 @@ export const profileSchema = z.object({
     .enum(["18-25", "26-35", "36-45", "46-55", "55+"])
     .optional(),
   interestIds: z
-    .array(z.string().uuid())
+    .array(z.string().min(1))
     .min(1, "Select at least one interest")
     .max(15, "Select up to 15 interests"),
   joinCode: z.string().length(8, "Join code must be 8 characters"),
