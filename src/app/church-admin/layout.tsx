@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { SignOutButton } from "@/components/layout/sign-out-button";
 
 export default function ChurchAdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -17,6 +18,7 @@ export default function ChurchAdminLayout({ children }: { children: React.ReactN
             <Link href="/discover" className="text-slate-600 hover:text-slate-900">
               Back to app
             </Link>
+            <SignOutButton />
           </nav>
         </div>
       </header>

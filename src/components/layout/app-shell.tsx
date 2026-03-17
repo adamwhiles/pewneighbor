@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { SignOutButton } from "./sign-out-button";
 import { cn } from "@/lib/utils";
 import {
   Compass,
@@ -10,7 +11,6 @@ import {
   Hand,
   User,
   Settings,
-  LogOut,
 } from "lucide-react";
 
 const navItems = [
@@ -68,15 +68,7 @@ export function AppShell({ children, userName }: AppShellProps) {
             >
               <Settings className="h-5 w-5" />
             </Link>
-            <form action="/api/auth/signout" method="POST">
-              <button
-                type="submit"
-                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
-                title="Sign out"
-              >
-                <LogOut className="h-5 w-5" />
-              </button>
-            </form>
+            <SignOutButton />
           </div>
         </div>
       </header>
