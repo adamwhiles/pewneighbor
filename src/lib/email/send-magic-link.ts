@@ -13,7 +13,11 @@ export async function sendMagicLinkEmail({
   to: string;
   url: string;
 }) {
-  const { error } = await getResend().emails.send({
+  console.log("[sendMagicLinkEmail] attempting send to:", to);
+  console.log("[sendMagicLinkEmail] RESEND_API_KEY set:", !!process.env.RESEND_API_KEY);
+  console.log("[sendMagicLinkEmail] EMAIL_FROM:", process.env.EMAIL_FROM);
+
+  const { data, error } = await getResend().emails.send({
     from: process.env.EMAIL_FROM ?? "PewNeighbor <noreply@pewneighbor.com>",
     to,
     subject: "Your PewNeighbor sign-in link",
@@ -21,9 +25,10 @@ export async function sendMagicLinkEmail({
   });
 
   if (error) {
-    console.error("Failed to send magic link email:", error);
+    console.error("[sendMagicLinkEmail] Resend error:", JSON.stringify(error));
     throw new Error("Failed to send sign-in email");
   }
+  console.log("[sendMagicLinkEmail] sent successfully, id:", data?.id);
 }
 
 export async function sendWaveNotificationEmail({

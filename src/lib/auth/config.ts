@@ -65,4 +65,13 @@ export const authConfig: NextAuthConfig = {
     },
   },
   trustHost: true,
+  debug: process.env.NODE_ENV !== "production",
+  logger: {
+    error(error) {
+      console.error("[Auth.js error]", error);
+    },
+    warn(code) {
+      console.warn("[Auth.js warn]", code);
+    },
+  },
 };
