@@ -1,14 +1,11 @@
-import { signOut } from "@/lib/auth";
+"use client";
+
 import { LogOut } from "lucide-react";
+import { signOutAction } from "@/lib/auth/actions";
 
 export function SignOutButton() {
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut({ redirectTo: "/" });
-      }}
-    >
+    <form action={signOutAction}>
       <button
         type="submit"
         className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
